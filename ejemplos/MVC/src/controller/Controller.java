@@ -4,12 +4,12 @@ import java.util.Observable;
 import java.util.Observer;
 
 import model.Model;
-import view.DolaresView;
+import view.DolarView;
 
 public class Controller implements java.awt.event.ActionListener, Observer {
 
 	private Model model;
-	private DolaresView view;
+	private DolarView view;
 
 	public Controller() {
 		System.out.println("Se crea el controlador");
@@ -22,7 +22,7 @@ public class Controller implements java.awt.event.ActionListener, Observer {
 		this.model.addObserver(this);
 	}
 
-	public void addView(DolaresView v) {
+	public void addView(DolarView v) {
 		System.out.println("Se agrega la vista al controlador");
 		this.view = v;
 	}
@@ -36,10 +36,16 @@ public class Controller implements java.awt.event.ActionListener, Observer {
 
 	// Se invoca al precionar el boton
 	public void actionPerformed(java.awt.event.ActionEvent e) {
-		System.out.println("Interpreto el evento");
 		System.out.println("El controlador cambia el modelo");
-		Double valor = Double.valueOf(view.cantDineroTextField.getText());
-		model.fijarValor(valor);
+		String text = view.getDolarTextField().getText();
+		if (!text.isEmpty()) {
+			Double valor = Double.valueOf(text);
+			model.fijarValor(valor);
+		} else {
+			System.out.println("Falta el valor en dolares.");
+
+		}
+
 	}
 
 }

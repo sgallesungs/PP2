@@ -2,8 +2,9 @@ package main;
 
 import model.Model;
 import view.BitcoinView;
-import view.DolaresView;
-import view.PesosView;
+import view.DolarView;
+import view.PesoView;
+import view.PrincipalView;
 
 public class RunMVC {
 
@@ -13,9 +14,10 @@ public class RunMVC {
 		// Se crea el modelo
 		Model myModel = new Model(valor_inicial);
 		// Se crea la vista
-		DolaresView view = new DolaresView(myModel);
-		BitcoinView bitcoinView= new BitcoinView(myModel);
-		PesosView pesosView= new PesosView(myModel);
+		DolarView view = new DolarView(myModel);
+		BitcoinView bitcoinView = new BitcoinView(myModel);
+		PesoView pesosView = new PesoView(myModel);
+		PrincipalView principalView = new PrincipalView(myModel);
 	}
 
 }
