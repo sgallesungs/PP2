@@ -3,15 +3,19 @@ package controller;
 import java.util.Observable;
 import java.util.Observer;
 
-import model.Model;
-import view.DolarView;
+import javax.swing.JComboBox;
+import javax.swing.JTextField;
 
-public class Controller implements java.awt.event.ActionListener, Observer {
+import conversor.Conversor;
+import model.Model;
+import view.DolarComboView;
+
+public class ControllerDolarCombo implements java.awt.event.ActionListener, Observer {
 
 	private Model model;
-	private DolarView view;
+	private DolarComboView view;
 
-	public Controller() {
+	public ControllerDolarCombo() {
 		System.out.println("Se crea el controlador");
 	}
 
@@ -22,7 +26,7 @@ public class Controller implements java.awt.event.ActionListener, Observer {
 		this.model.addObserver(this);
 	}
 
-	public void addView(DolarView v) {
+	public void addView(DolarComboView v) {
 		System.out.println("Se agrega la vista al controlador");
 		this.view = v;
 	}
@@ -34,18 +38,26 @@ public class Controller implements java.awt.event.ActionListener, Observer {
 
 	}
 
-	// Se invoca al precionar el boton
+	// Se invoca al presionar el boton
 	public void actionPerformed(java.awt.event.ActionEvent e) {
 		System.out.println("El controlador cambia el modelo");
-		String text = view.getDolarTextField().getText();
+		JTextField campo = this.view.getMontoTextField();
+		JComboBox<String> comboBox = this.view.getComboBox();
+		String text = campo.getText();
 		if (!text.isEmpty()) {
 			Double valor = Double.valueOf(text);
+			if (comboBox.getSelectedItem().equals("AR")) {
+				valor = Conversor.convertirPesoADolar(valor);
+			}
+			if (comboBox.getSelectedItem().equals("BTC")) {
+				valor = Conversor.convertirBitcoinADolar(valor);
+
+			}
 			model.fijarValor(valor);
 		} else {
 			System.out.println("Falta el valor en dolares.");
 
 		}
-
 	}
 
 }
